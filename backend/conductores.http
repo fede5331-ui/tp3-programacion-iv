@@ -1,0 +1,93 @@
+@url=http://localhost:3000
+
+### Login (guarda el token)
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "fede@correo.com",
+  "password": "hola1234"
+}
+
+###
+@token = {{login.response.body.token}}
+
+### Listar conductores
+GET {{url}}/conductores
+Authorization: Bearer {{token}}
+
+### Filtrar por apellido
+GET {{url}}/conductores?apellido=per
+Authorization: Bearer {{token}}
+
+### Crear conductor (debe dar 201)
+POST {{url}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Juan",
+  "apellido": "Pérez",
+  "numeroDocumento": "30123456",
+  "numeroLicencia": "LIC12345",
+  "fechaAltaLicencia": "2020-03-15",
+  "fechaVencimientoLicencia": "2030-03-15"
+}
+
+### Crear con datos inválidos (debe dar 400)
+POST {{url}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "apellido": "Gómez",
+  "numeroDocumento": "abc",
+  "numeroLicencia": "1",
+  "fechaAltaLicencia": "2026-02-31",
+  "fechaVencimientoLicencia": "2020-01-01"
+}
+
+### Documento repetido (debe dar 400, correr DESPUÉS de crear el primero)
+POST {{url}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Pedro",
+  "apellido": "López",
+  "numeroDocumento": "30123456",
+  "numeroLicencia": "LIC99999",
+  "fechaAltaLicencia": "2021-01-10",
+  "fechaVencimientoLicencia": "2031-01-10"
+}
+
+### Ver un conductor
+GET {{url}}/conductores/1
+Authorization: Bearer {{token}}
+
+### Modificar un conductor
+PUT {{url}}/conductores/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Juan Carlos",
+  "apellido": "Pérez",
+  "numeroDocumento": "30123456",
+  "numeroLicencia": "LIC12345",
+  "fechaAltaLicencia": "2020-03-15",
+  "fechaVencimientoLicencia": "2031-03-15"
+}
+
+### Sin token (debe dar 401)
+GET {{url}}/conductores
+
+### Conductor inexistente (debe dar 404)
+GET {{url}}/conductores/999
+Authorization: Bearer {{token}}
+
+### Eliminar un conductor (debe dar 204)
+DELETE {{url}}/conductores/1
+Authorization: Bearer {{token}}

@@ -35,6 +35,42 @@ export const validarVehiculo = [
     .withMessage("La capacidad de carga debe ser un número mayor a 0"),
 ];
 
+// Validación de los datos de un conductor (se usa al crear y al modificar)
+export const validarConductor = [
+  body("nombre")
+    .trim()
+    .isLength({ min: 1, max: 50 })
+    .withMessage("El nombre es obligatorio (máx. 50 caracteres)"),
+  body("apellido")
+    .trim()
+    .isLength({ min: 1, max: 50 })
+    .withMessage("El apellido es obligatorio (máx. 50 caracteres)"),
+  body("numeroDocumento")
+    .trim()
+    .isNumeric({ no_symbols: true })
+    .isLength({ min: 7, max: 9 })
+    .withMessage("El documento debe tener entre 7 y 9 dígitos, sin puntos"),
+  body("numeroLicencia")
+    .trim()
+    .isAlphanumeric()
+    .isLength({ min: 5, max: 20 })
+    .withMessage("La licencia debe tener entre 5 y 20 letras o números"),
+  // Las fechas llegan como texto "AAAA-MM-DD"; strict rechaza fechas imposibles como 2026-02-31
+  body("fechaAltaLicencia")
+    .isISO8601({ strict: true })
+    .withMessage("Fecha de alta inválida (formato AAAA-MM-DD)"),
+  body("fechaVencimientoLicencia")
+    .isISO8601({ strict: true })
+    .withMessage("Fecha de vencimiento inválida (formato AAAA-MM-DD)")
+    // Validación personalizada: compara con otro campo del body
+    .custom((vencimiento, { req }) => {
+      if (vencimiento <= req.body.fechaAltaLicencia) {
+        throw new Error("El vencimiento debe ser posterior al alta de la licencia");
+      }
+      return true;
+    }),
+];
+
 // Middleware que se ejecuta DESPUÉS de las validaciones.
 // Si alguna falló, corta acá y responde 400 con la lista de errores.
 // Si todo está bien, next() deja pasar a la siguiente función (el handler de la ruta).

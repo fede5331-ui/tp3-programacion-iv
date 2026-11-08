@@ -3,6 +3,7 @@ import cors from "cors";
 import { conectarDB } from "./db.js";
 import authRouter, { authConfig } from "./auth.js";
 import vehiculosRouter from "./vehiculos.js";
+import conductoresRouter from "./conductores.js";
 
 // Abrimos la conexión con la base de datos al iniciar
 conectarDB();
@@ -25,12 +26,10 @@ app.get("/", (req, res) => {
   res.send("API de vehículos, conductores y viajes funcionando");
 });
 
-// Todas las rutas de auth.js quedan bajo el prefijo /auth
-// (queda /auth/registro y /auth/login)
+// Cada router queda bajo su prefijo: /auth, /vehiculos y /conductores
 app.use("/auth", authRouter);
-
-// Todas las rutas de vehiculos.js quedan bajo el prefijo /vehiculos
 app.use("/vehiculos", vehiculosRouter);
+app.use("/conductores", conductoresRouter);
 
 // Ponemos el servidor a escuchar peticiones
 app.listen(port, () => {
