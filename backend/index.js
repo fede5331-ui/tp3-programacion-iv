@@ -1,0 +1,26 @@
+import express from "express";
+import cors from "cors";
+import { conectarDB } from "./db.js";
+
+// Abrimos la conexión con la base de datos al iniciar
+conectarDB();
+
+// Creamos la aplicación Express y definimos el puerto
+const app = express();
+const port = 3000;
+
+// Permite que el servidor entienda el body de las peticiones en formato JSON
+app.use(express.json());
+
+// Habilita CORS: sin esto el navegador bloquea las llamadas del frontend (otro puerto)
+app.use(cors());
+
+// Ruta de prueba para verificar que el servidor responde
+app.get("/", (req, res) => {
+  res.send("API de vehículos, conductores y viajes funcionando");
+});
+
+// Ponemos el servidor a escuchar peticiones
+app.listen(port, () => {
+  console.log(`La aplicación está funcionando en el puerto ${port}`);
+});
