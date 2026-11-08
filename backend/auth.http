@@ -1,0 +1,40 @@
+@url=http://localhost:3000
+
+### Registrar un usuario nuevo
+POST {{url}}/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "Federico Morales",
+  "email": "fede@correo.com",
+  "password": "hola1234"
+}
+
+### Login (guarda la respuesta con el nombre "login")
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "fede@correo.com",
+  "password": "hola1234"
+}
+
+### Login con contraseña incorrecta (debe dar 401)
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "fede@correo.com",
+  "password": "equivocada1"
+}
+
+### Registro con datos inválidos (debe dar 400)
+POST {{url}}/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "email": "esto-no-es-un-email",
+  "password": "123"
+}
