@@ -1,0 +1,76 @@
+@url=http://localhost:3000
+
+### Login (guarda el token para usarlo abajo)
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "fede@correo.com",
+  "password": "hola1234"
+}
+
+###
+@token = {{login.response.body.token}}
+
+### Listar vehículos
+GET {{url}}/vehiculos
+Authorization: Bearer {{token}}
+
+### Listar filtrando por marca
+GET {{url}}/vehiculos?marca=for
+Authorization: Bearer {{token}}
+
+### Crear vehículo (debe dar 201)
+POST {{url}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Ford",
+  "modelo": "Cargo 1722",
+  "patente": "ab123cd",
+  "anio": 2020,
+  "capacidadCarga": 8000
+}
+
+### Crear con datos inválidos (debe dar 400)
+POST {{url}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "",
+  "modelo": "Cargo",
+  "patente": "123",
+  "anio": 1800,
+  "capacidadCarga": -5
+}
+
+### Ver un vehículo
+GET {{url}}/vehiculos/1
+Authorization: Bearer {{token}}
+
+### Modificar un vehículo
+PUT {{url}}/vehiculos/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Ford",
+  "modelo": "Cargo 1722",
+  "patente": "AB123CD",
+  "anio": 2021,
+  "capacidadCarga": 8500
+}
+
+### Sin token (debe dar 401)
+GET {{url}}/vehiculos
+
+### Vehículo inexistente (debe dar 404)
+GET {{url}}/vehiculos/999
+Authorization: Bearer {{token}}
+
+### Eliminar un vehículo (debe dar 204)
+DELETE {{url}}/vehiculos/1
+Authorization: Bearer {{token}}
