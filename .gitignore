@@ -1,0 +1,15 @@
+# Dependencias (se reinstalan con npm install)
+node_modules
+
+# Variables secretas (contraseñas, claves)
+.env
+
+# Build del frontend
+dist
+
+# Archivos del sistema y del editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.log
