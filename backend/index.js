@@ -4,6 +4,7 @@ import { conectarDB } from "./db.js";
 import authRouter, { authConfig } from "./auth.js";
 import vehiculosRouter from "./vehiculos.js";
 import conductoresRouter from "./conductores.js";
+import viajesRouter from "./viajes.js";
 
 // Abrimos la conexión con la base de datos al iniciar
 conectarDB();
@@ -26,10 +27,11 @@ app.get("/", (req, res) => {
   res.send("API de vehículos, conductores y viajes funcionando");
 });
 
-// Cada router queda bajo su prefijo: /auth, /vehiculos y /conductores
+// Cada router queda bajo su prefijo
 app.use("/auth", authRouter);
 app.use("/vehiculos", vehiculosRouter);
 app.use("/conductores", conductoresRouter);
+app.use("/viajes", viajesRouter);
 
 // Ponemos el servidor a escuchar peticiones
 app.listen(port, () => {

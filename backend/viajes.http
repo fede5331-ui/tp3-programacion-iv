@@ -1,0 +1,126 @@
+@url=http://localhost:3000
+
+### Login (guarda el token)
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "fede@correo.com",
+  "password": "hola1234"
+}
+
+###
+@token = {{login.response.body.token}}
+
+### Registrar un viaje (debe dar 201)
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculoId": 2,
+  "conductorId": 2,
+  "fechaSalida": "2026-11-05T08:00",
+  "fechaLlegada": "2026-11-05T17:30",
+  "origen": "La Rioja",
+  "destino": "Córdoba",
+  "kilometros": 450,
+  "observaciones": "Carga de alimentos"
+}
+
+### Registrar otro viaje para tener historial
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculoId": 2,
+  "conductorId": 2,
+  "fechaSalida": "2026-11-07T06:00",
+  "fechaLlegada": "2026-11-07T12:00",
+  "origen": "Córdoba",
+  "destino": "San Luis",
+  "kilometros": 380
+}
+
+### Listar todos los viajes
+GET {{url}}/viajes
+Authorization: Bearer {{token}}
+
+### Historial de un vehículo
+GET {{url}}/viajes?vehiculoId=2
+Authorization: Bearer {{token}}
+
+### Historial de un conductor
+GET {{url}}/viajes?conductorId=2
+Authorization: Bearer {{token}}
+
+### Total de kilómetros de un vehículo (debe dar 830 con los dos viajes de arriba)
+GET {{url}}/viajes/kilometros?vehic
+Authorization: Bearer {{token}}
+
+### Total de kilómetros de un conductor
+GET {{url}}/viajes/kilometros?conductorId=2
+Authorization: Bearer {{token}}
+
+### Datos inválidos: llegada anterior a salida y km negativos (debe dar 400)
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculoId": 2,
+  "conductorId": 2,
+  "fechaSalida": "2026-11-05T08:00",
+  "fechaLlegada": "2026-11-04T08:00",
+  "origen": "",
+  "destino": "Córdoba",
+  "kilometros": -10
+}
+
+### Vehículo inexistente (debe dar 400)
+POST {{url}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculoId": 999,
+  "conductorId": 2,
+  "fechaSalida": "2026-11-05T08:00",
+  "fechaLlegada": "2026-11-05T17:30",
+  "origen": "La Rioja",
+  "destino": "Córdoba",
+  "kilometros": 450
+}
+
+### Ver un viaje
+GET {{url}}/viajes/1
+Authorization: Bearer {{token}}
+
+### Modificar un viaje
+PUT {{url}}/viajes/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculoId": 2,
+  "conductorId": 2,
+  "fechaSalida": "2026-11-05T08:00",
+  "fechaLlegada": "2026-11-05T18:00",
+  "origen": "La Rioja",
+  "destino": "Córdoba",
+  "kilometros": 460,
+  "observaciones": "Demora por tránsito"
+}
+
+### Sin token (debe dar 401)
+GET {{url}}/viajes
+
+### Viaje inexistente (debe dar 404)
+GET {{url}}/viajes/999
+Authorization: Bearer {{token}}
+
+### Eliminar un viaje (debe dar 204)
+DELETE {{url}}/viajes/2
+Authorization: Bearer {{token}}
