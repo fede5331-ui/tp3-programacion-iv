@@ -122,5 +122,5 @@ GET {{url}}/viajes/999
 Authorization: Bearer {{token}}
 
 ### Eliminar un viaje (debe dar 204)
-DELETE {{url}}/viajes/2
+DELETE {{url}}/viajes/7
 Authorization: Bearer {{token}}
