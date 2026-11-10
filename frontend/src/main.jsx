@@ -10,6 +10,8 @@ import { Login } from "./Login";
 import { Registro } from "./Registro";
 import { Vehiculos } from "./Vehiculos";
 import { VehiculoFormulario } from "./VehiculoFormulario";
+import { Conductores } from "./Conductores";
+import { ConductorFormulario } from "./ConductorFormulario";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -27,10 +29,14 @@ createRoot(document.getElementById("root")).render(
             {/* Rutas protegidas: AuthLayout redirige al login si no hay sesión */}
             <Route path="vehiculos" element={<AuthLayout />}>
               <Route index element={<Vehiculos />} />
-              {/* /vehiculos/crear: formulario vacío */}
               <Route path="crear" element={<VehiculoFormulario />} />
-              {/* /vehiculos/5: el mismo formulario, en modo edición del vehículo 5 */}
               <Route path=":id" element={<VehiculoFormulario />} />
+            </Route>
+
+            <Route path="conductores" element={<AuthLayout />}>
+              <Route index element={<Conductores />} />
+              <Route path="crear" element={<ConductorFormulario />} />
+              <Route path=":id" element={<ConductorFormulario />} />
             </Route>
           </Route>
         </Routes>

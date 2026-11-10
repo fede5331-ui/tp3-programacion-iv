@@ -26,3 +26,16 @@ export const esEnteroEnRango = (valor, min, max) => {
 // Número mayor a 0 (acepta decimales)
 export const esNumeroPositivo = (valor) =>
   valor !== "" && !Number.isNaN(Number(valor)) && Number(valor) > 0;
+
+// Documento: solo dígitos, entre 7 y 9 (igual que en el backend)
+export const esDocumentoValido = (valor) => /^\d{7,9}$/.test(valor.trim());
+
+// Licencia: letras y números, entre 5 y 20 caracteres
+export const esLicenciaValida = (valor) => /^[A-Za-z0-9]{5,20}$/.test(valor.trim());
+
+// Fecha en formato AAAA-MM-DD que exista en el calendario (rechaza 2026-02-31)
+export const esFechaValida = (valor) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(valor)) return false;
+  const fecha = new Date(`${valor}T00:00:00`);
+  return !Number.isNaN(fecha.getTime()) && fecha.toLocaleDateString("sv-SE") === valor;
+};
