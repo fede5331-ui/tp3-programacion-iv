@@ -39,3 +39,8 @@ export const esFechaValida = (valor) => {
   const fecha = new Date(`${valor}T00:00:00`);
   return !Number.isNaN(fecha.getTime()) && fecha.toLocaleDateString("sv-SE") === valor;
 };
+
+// Fecha y hora en formato AAAA-MM-DDTHH:MM (el que entrega un input datetime-local)
+export const esFechaHoraValida = (valor) =>
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(valor) &&
+  !Number.isNaN(new Date(valor).getTime());
