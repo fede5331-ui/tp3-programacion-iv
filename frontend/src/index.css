@@ -1,5 +1,224 @@
-/* Estilos globales de la aplicación (se completan más adelante) */
+/* ===== Variables: los colores y medidas se definen una sola vez y se reutilizan ===== */
+:root {
+  --color-primario: #1a5c8a;
+  --color-primario-oscuro: #134566;
+  --color-fondo: #eef1f5;
+  --color-borde: #d4dae3;
+  --color-texto: #1f2933;
+  --color-suave: #5f6b7a;
+  --color-error: #c62828;
+  --color-peligro: #b3261e;
+  --radio: 8px;
+}
+
+/* ===== Base ===== */
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.5;
+}
+
+/* El contenedor principal funciona como una "hoja" blanca centrada */
+main {
+  width: 92%;
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 24px;
+  background-color: white;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+h1,
+h2 {
+  color: var(--color-primario);
+  text-align: center;
+}
+
+h1 {
+  margin: 8px 0 16px;
+}
+
+h2 {
+  margin: 20px 0 10px;
+}
+
+/* ===== Menú de navegación ===== */
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0 0 8px;
+  border-bottom: 2px solid var(--color-borde);
+}
+
+nav a {
+  display: block;
+  padding: 8px 14px;
+  border-radius: var(--radio);
+  color: var(--color-primario);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  background-color: var(--color-fondo);
+}
+
+/* El link de la página actual se resalta (la clase "active" la pone Layout.jsx) */
+nav li.active a {
+  background-color: var(--color-primario);
+  color: white;
+}
+
+/* Nombre del usuario: queda a la derecha, empujado por el margen automático */
+nav li.usuario {
+  margin-left: auto;
+  color: var(--color-suave);
+  font-size: 0.9em;
+}
+
+/* ===== Formularios ===== */
+form {
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin: 14px 0 4px;
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 10px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  font: inherit;
+  background-color: white;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Resaltado cuando el campo está seleccionado */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--color-primario);
+  border-color: transparent;
+}
+
+/* ===== Filtros (están fuera de un <form>, en la parte superior de cada listado) ===== */
+main > input,
+main > select {
+  max-width: 420px;
+  display: block;
+}
+
+/* ===== Botones ===== */
+button {
+  padding: 8px 16px;
+  margin: 12px 6px 0 0;
+  border: 0;
+  border-radius: var(--radio);
+  background-color: var(--color-primario);
+  color: white;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--color-primario-oscuro);
+}
+
+/* Botones dentro de la tabla: más chicos */
+td button {
+  margin: 2px 4px 2px 0;
+  padding: 5px 10px;
+  font-size: 0.85em;
+}
+
+/* El botón "Eliminar" es el último de cada fila: color de advertencia */
+td button:last-child {
+  background-color: var(--color-peligro);
+}
+
+td button:last-child:hover {
+  background-color: #8c1d18;
+}
+
+/* El botón "Salir" del menú es discreto */
+nav button {
+  margin: 0;
+  background-color: transparent;
+  color: var(--color-suave);
+  border: 1px solid var(--color-borde);
+}
+
+nav button:hover {
+  background-color: var(--color-fondo);
+}
+
+/* ===== Tablas ===== */
+table {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
+  font-size: 0.93em;
+}
+
+th {
+  background-color: var(--color-primario);
+  color: white;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+/* Filas alternadas para leer mejor */
+tbody tr:nth-child(even) {
+  background-color: #f7f9fb;
+}
+
+tbody tr:hover {
+  background-color: #e8f0f7;
+}
+
+/* ===== Mensajes de error ===== */
+.error {
+  color: var(--color-error);
+  margin: 4px 0 0;
+  font-size: 0.9em;
+}
+
+/* ===== Pantallas chicas (celulares) ===== */
+@media (max-width: 700px) {
+  main {
+    padding: 14px;
+  }
+
+  /* La tabla se desplaza horizontalmente en vez de romper el diseño */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
