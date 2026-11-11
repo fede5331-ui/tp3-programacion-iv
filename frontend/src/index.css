@@ -222,3 +222,39 @@ tbody tr:hover {
     white-space: nowrap;
   }
 }
+
+/* ===== Página principal ===== */
+.subtitulo {
+  text-align: center;
+  color: var(--color-suave);
+  margin-bottom: 24px;
+}
+
+/* Tarjetas en una grilla que se acomoda sola según el ancho disponible */
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.tarjetas section {
+  padding: 16px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background-color: #f7f9fb;
+}
+
+.tarjetas h3 {
+  margin: 0 0 6px;
+  color: var(--color-primario);
+}
+
+.tarjetas p {
+  margin: 0;
+  font-size: 0.93em;
+}
+
+.acciones-inicio {
+  margin-top: 28px;
+  text-align: center;
+}
