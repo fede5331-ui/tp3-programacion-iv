@@ -33,6 +33,19 @@ app.use("/vehiculos", vehiculosRouter);
 app.use("/conductores", conductoresRouter);
 app.use("/viajes", viajesRouter);
 
+// 404: si ninguna ruta anterior coincidió, la URL no existe
+app.use((req, res) => {
+  res.status(404).json({ mensaje: "Ruta no encontrada" });
+});
+
+// 500: manejador de errores. Express lo usa cuando algo falla sin ser controlado
+// (por ejemplo, la base de datos caída). Tiene 4 parámetros: así Express lo reconoce.
+app.use((err, req, res, next) => {
+  console.error(err); // el detalle técnico queda en la consola del servidor
+  // Al cliente no le mostramos detalles internos, solo un mensaje general
+  res.status(500).json({ mensaje: "Error interno del servidor" });
+});
+
 // Ponemos el servidor a escuchar peticiones
 app.listen(port, () => {
   console.log(`La aplicación está funcionando en el puerto ${port}`);
